@@ -23,6 +23,6 @@
 }
 
 .Filters-Movie .Show-Filters {
-  height: 65px;
+  height: 150px;
   transition: height 0.500s ease-in;
 }

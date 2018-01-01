@@ -8,7 +8,7 @@ class Home extends Component {
     super(props);
     this.state = {
       listMovies: [],
-      filtersMovie: "Hide-Filters",
+      filtersMovie: "Show-Filters",
       arrow: "keyboard_arrow_down"
     }
     this.handleChange = this.handleChange.bind(this)
@@ -48,7 +48,7 @@ class Home extends Component {
                 <img src={listMovies[i].medium_cover_image} alt="sign" />
                 <h5>{listMovies[i].title}</h5>
                 <hr/>
-                <p>{listMovies[i].description_full.substring(0,100)}</p>
+                <p>{listMovies[i].description_full.substring(0,100)} ...</p>
               </card>
             </a>
           </div>
@@ -72,6 +72,24 @@ class Home extends Component {
               </div>
               <div col="1/3">
                 <input type="checkbox" id="checkbox-1" /> <label htmlFor="checkbox-1">Include Rotten Tomatoes Rating ?</label>
+              </div>
+              <div col="1/3">
+                <input type="number" placeholder="The Limit of Results"/>
+              </div>
+              <div col="1/3">
+                <select>
+                	<option disabled>Sort by</option>
+                	<option value="title">Title</option>
+                	<option value="year">Year</option>
+                	<option value="rating">Rating</option>
+                </select>
+              </div>
+              <div col="1/3">
+                <select>
+                	<option disabled>Order by</option>
+                	<option value="desc">Desc</option>
+                	<option value="asc">Asc</option>
+                </select>
               </div>
             </div>
           </div>
