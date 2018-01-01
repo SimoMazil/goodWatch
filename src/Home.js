@@ -8,7 +8,8 @@ class Home extends Component {
     super(props);
     this.state = {
       listMovies: [],
-      filtersMovie: "Hide-Filters"
+      filtersMovie: "Hide-Filters",
+      arrow: "keyboard_arrow_down"
     }
     this.handleChange = this.handleChange.bind(this)
     this.hideFiltersMovie = this.hideFiltersMovie.bind(this)
@@ -39,15 +40,17 @@ class Home extends Component {
     if(listMovies && listMovies.length > 0) {
       for(let i=0; i < 20; i++) {
         console.log(listMovies[i]);
+        let trailerLink = `https://www.youtube.com/watch?v=${listMovies[i].yt_trailer_code}`
         cards.push(
           <div col="2/12" key={listMovies[i].id}>
-            <card style={{minHeight: "550px", maxHeight: "550px", overflow: "hidden"}}>
-              <img src={listMovies[i].medium_cover_image} alt="sign" />
-
-              <h5>{listMovies[i].title}</h5>
-
-              <p>{listMovies[i].description_full.substring(0,100)}</p>
-            </card>
+            <a tt="Click to Watch The Trailer" href={trailerLink} target="_blank">
+              <card style={{minHeight: "550px", maxHeight: "550px", overflow: "hidden"}}>
+                <img src={listMovies[i].medium_cover_image} alt="sign" />
+                <h5>{listMovies[i].title}</h5>
+                <hr/>
+                <p>{listMovies[i].description_full.substring(0,100)}</p>
+              </card>
+            </a>
           </div>
         )
       }
@@ -73,7 +76,7 @@ class Home extends Component {
             </div>
           </div>
           <div col="1/12">
-            <button style={{float: "right"}} onClick={this.hideFiltersMovie.bind(this)}><i className="material-icons">keyboard_arrow_down</i></button>
+            <button tt="Show / Hide Filters" style={{float: "right"}} onClick={this.hideFiltersMovie.bind(this)}><i className="material-icons">{this.state.arrow}</i></button>
           </div>
         </div>
       </div>
@@ -82,7 +85,8 @@ class Home extends Component {
 
   hideFiltersMovie(e) {
     this.setState(prevState => ({
-      filtersMovie: prevState.filtersMovie === "Hide-Filters" ? "Show-Filters" : "Hide-Filters"
+      filtersMovie: prevState.filtersMovie === "Hide-Filters" ? "Show-Filters" : "Hide-Filters",
+      arrow: prevState.arrow === "keyboard_arrow_down" ? "keyboard_arrow_up" : "keyboard_arrow_down"
     }))
   }
 
