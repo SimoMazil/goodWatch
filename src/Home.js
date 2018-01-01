@@ -8,8 +8,10 @@ class Home extends Component {
     super(props);
     this.state = {
       listMovies: [],
+      filtersMovie: "Hide-Filters"
     }
     this.handleChange = this.handleChange.bind(this)
+    this.hideFiltersMovie = this.hideFiltersMovie.bind(this)
   }
 
   handleChange(e) {
@@ -34,8 +36,8 @@ class Home extends Component {
   cardMovies() {
     const listMovies = this.state.listMovies;
     const cards = [];
-    if(listMovies.length > 0) {
-      for(let i=0; i<20; i++) {
+    if(listMovies && listMovies.length > 0) {
+      for(let i=0; i < 20; i++) {
         console.log(listMovies[i]);
         cards.push(
           <div col="2/12" key={listMovies[i].id}>
@@ -51,6 +53,37 @@ class Home extends Component {
       }
       return cards;
     }
+  }
+
+  filtersMovie() {
+    return (
+      <div className="Filters-Movie">
+        <div col="1/1">
+          <div col="11/12">
+            <div className={this.state.filtersMovie} id="Filters">
+              <div col="1/3">
+                <input type="text" placeholder="Actor / Director Name"/>
+              </div>
+              <div col="1/3">
+                <input type="number" placeholder="The Minimum Rating"/>
+              </div>
+              <div col="1/3">
+                <input type="checkbox" id="checkbox-1" /> <label htmlFor="checkbox-1">Include Rotten Tomatoes Rating ?</label>
+              </div>
+            </div>
+          </div>
+          <div col="1/12">
+            <button style={{float: "right"}} onClick={this.hideFiltersMovie.bind(this)}><i className="material-icons">keyboard_arrow_down</i></button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  hideFiltersMovie(e) {
+    this.setState(prevState => ({
+      filtersMovie: prevState.filtersMovie === "Hide-Filters" ? "Show-Filters" : "Hide-Filters"
+    }))
   }
 
   render() {
@@ -88,6 +121,9 @@ class Home extends Component {
               </select>
             </div>
         </header>
+        <div col="1/1">
+          {this.filtersMovie()}
+        </div>
         <div col="1/1">
           {this.cardMovies()}
         </div>

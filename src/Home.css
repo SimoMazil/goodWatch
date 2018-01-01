@@ -12,3 +12,17 @@
 .Home-title {
   font-size: 1.5em;
 }
+
+#Filters {
+  overflow: hidden;
+}
+
+.Filters-Movie .Hide-Filters {
+  height: 0px;
+  transition: height 0.500s ease-out;
+}
+
+.Filters-Movie .Show-Filters {
+  height: 77px;
+  transition: height 0.500s ease-in;
+}
