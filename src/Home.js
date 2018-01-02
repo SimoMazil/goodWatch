@@ -139,13 +139,13 @@ class Home extends Component {
                 <input type="text" placeholder="Actor / Director Name"/>
               </div>
               <div col="1/3">
+                <input type="number" min="1" max="50" placeholder="The Limit of Results" onChange={this.handleLimit.bind(this)}/>
+              </div>
+              <div col="1/3">
                 <input type="number" placeholder="The Minimum Rating" onChange={this.handleRating.bind(this)}/>
               </div>
               <div col="1/3">
                 <input type="checkbox" id="RottenTomatoes" onChange={this.handleRTRating.bind(this)}/> <label htmlFor="RottenTomatoes">Include Rotten Tomatoes Rating ?</label>
-              </div>
-              <div col="1/3">
-                <input type="number" min="1" max="50" placeholder="The Limit of Results" onChange={this.handleLimit.bind(this)}/>
               </div>
               <div col="1/3">
                 <select onChange={this.handleSortBy.bind(this)}>
