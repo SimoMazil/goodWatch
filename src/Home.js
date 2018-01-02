@@ -8,17 +8,91 @@ class Home extends Component {
     super(props);
     this.state = {
       listMovies: [],
+      genre: "",
+      rating: "0",
+      RTRating: false,
+      limit: "20",
+      sortBy: "date_added",
+      orderBy: "desc",
       filtersMovie: "Show-Filters",
-      arrow: "keyboard_arrow_down"
+      arrow: "keyboard_arrow_down",
+      fetched: false
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleGenre = this.handleGenre.bind(this)
+    this.handleRating = this.handleRating.bind(this)
+    this.handleRTRating = this.handleRTRating.bind(this)
+    this.handleLimit = this.handleLimit.bind(this)
     this.hideFiltersMovie = this.hideFiltersMovie.bind(this)
   }
 
-  handleChange(e) {
-    var that = this;
-    var genre = e.target.value;
-    var url = `https://yts.am/api/v2/list_movies.json?genre=${genre}`;
+  handleGenre(e) {
+    this.setState({
+      genre: e.target.value,
+      fetched: false
+    })
+  }
+
+  handleRating(e) {
+    this.setState({
+      rating: e.target.value,
+      fetched: false
+    })
+  }
+
+  handleRTRating(e) {
+    this.setState({
+      RTRating: e.target.checked,
+      fetched: false
+    })
+  }
+
+  handleLimit(e) {
+    this.setState({
+      limit: e.target.value,
+      fetched: false
+    })
+  }
+
+  handleSortBy(e) {
+    this.setState({
+      sortBy: e.target.value,
+      fetched: false
+    })
+  }
+
+  handleOrderBy(e) {
+    this.setState({
+      orderBy: e.target.value,
+      fetched: false
+    })
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log("will update");
+    if(!nextState.fetched) {
+      this.fetchMovies();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevState.fetched) {
+      this.setState({
+        fetched: true
+      })
+    }
+  }
+
+  fetchMovies() {
+    console.log("fetch movies");
+    const that = this;
+    const genre = this.state.genre;
+    const rating = Number(this.state.rating);
+    const limit = Number(this.state.limit) + 1;
+    const rtr = this.state.RTRating;
+    const sortBy = this.state.sortBy;
+    const orderBy = this.state.orderBy;
+    const url = `https://yts.am/api/v2/list_movies.json?genre=
+    ${genre}&minimum_rating=${rating}&with_rt_ratings=${rtr}&limit=${limit}&sort_by=${sortBy}&order_by=${orderBy}`;
 
     fetch(url)
     .then(function(response) {
@@ -29,17 +103,18 @@ class Home extends Component {
     })
     .then(function(data) {
       that.setState({
-        listMovies: data.data.movies
+        listMovies: data.data.movies,
       })
     });
   }
 
   cardMovies() {
+    console.log("card movies");
     const listMovies = this.state.listMovies;
     const cards = [];
     if(listMovies && listMovies.length > 0) {
-      for(let i=0; i < 20; i++) {
-        console.log(listMovies[i]);
+      for(let i=0; i < listMovies.length - 1; i++) {
+        // console.log(listMovies[i]);
         let trailerLink = `https://www.youtube.com/watch?v=${listMovies[i].yt_trailer_code}`
         cards.push(
           <div col="2/12" key={listMovies[i].id}>
@@ -68,16 +143,16 @@ class Home extends Component {
                 <input type="text" placeholder="Actor / Director Name"/>
               </div>
               <div col="1/3">
-                <input type="number" placeholder="The Minimum Rating"/>
+                <input type="number" placeholder="The Minimum Rating" onChange={this.handleRating.bind(this)}/>
               </div>
               <div col="1/3">
-                <input type="checkbox" id="checkbox-1" /> <label htmlFor="checkbox-1">Include Rotten Tomatoes Rating ?</label>
+                <input type="checkbox" id="RottenTomatoes" onChange={this.handleRTRating.bind(this)}/> <label htmlFor="RottenTomatoes">Include Rotten Tomatoes Rating ?</label>
               </div>
               <div col="1/3">
-                <input type="number" placeholder="The Limit of Results"/>
+                <input type="number" min="1" max="50" placeholder="The Limit of Results" onChange={this.handleLimit.bind(this)}/>
               </div>
               <div col="1/3">
-                <select>
+                <select onChange={this.handleSortBy.bind(this)}>
                 	<option disabled>Sort by</option>
                 	<option value="title">Title</option>
                 	<option value="year">Year</option>
@@ -85,7 +160,7 @@ class Home extends Component {
                 </select>
               </div>
               <div col="1/3">
-                <select>
+                <select onChange={this.handleOrderBy.bind(this)}>
                 	<option disabled>Order by</option>
                 	<option value="desc">Desc</option>
                 	<option value="asc">Asc</option>
@@ -114,7 +189,7 @@ class Home extends Component {
         <header className="Home-header">
           <h1 className="App-title">Welcome to Good Watch</h1>
             <div col="1/3">
-              <select defaultValue="0" onChange={this.handleChange.bind(this)}>
+              <select defaultValue="0" onChange={this.handleGenre.bind(this)}>
                 <option value="0" disabled>Choose your favorite genre</option>
                   <option value="Action">Action</option>
                   <option value="Adventure">Adventure</option>
