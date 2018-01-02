@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Home.css';
+import '../css/Home.css';
 import 'barecss';
 
 class Home extends Component {
@@ -148,16 +148,15 @@ class Home extends Component {
                 <input type="checkbox" id="RottenTomatoes" onChange={this.handleRTRating.bind(this)}/> <label htmlFor="RottenTomatoes">Include Rotten Tomatoes Rating ?</label>
               </div>
               <div col="1/3">
-                <select onChange={this.handleSortBy.bind(this)}>
-                	<option disabled>Sort by</option>
+                <select defaultValue="0" onChange={this.handleSortBy.bind(this)}>
+                	<option value="0" disabled>Sort by</option>
                 	<option value="title">Title</option>
                 	<option value="year">Year</option>
                 	<option value="rating">Rating</option>
                 </select>
               </div>
               <div col="1/3">
-                <select onChange={this.handleOrderBy.bind(this)}>
-                	<option disabled>Order by</option>
+                <select defaultValue="desc" onChange={this.handleOrderBy.bind(this)}>
                 	<option value="desc">Desc</option>
                 	<option value="asc">Asc</option>
                 </select>
@@ -197,14 +196,14 @@ class Home extends Component {
                   <option value="Drama">Drama</option>
                   <option value="Family">Family</option>
                   <option value="Fantasy">Fantasy</option>
-                  <option value="Film">Film</option> Noir
+                  <option value="Film Noir">Film Noir</option>
                   <option value="History">History</option>
                   <option value="Horror">Horror</option>
                   <option value="Music">Music</option>
                   <option value="Musical">Musical</option>
                   <option value="Mystery">Mystery</option>
                   <option value="Romance">Romance</option>
-                  <option value="Sci">Sci</option>-Fi
+                  <option value="Sci-Fi">Sci-Fi</option>
                   <option value="Short">Short</option>
                   <option value="Sport">Sport</option>
                   <option value="Superhero">Superhero</option>
