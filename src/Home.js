@@ -16,7 +16,7 @@ class Home extends Component {
       orderBy: "desc",
       filtersMovie: "Show-Filters",
       arrow: "keyboard_arrow_down",
-      fetched: false
+      fetched: null
     }
     this.handleGenre = this.handleGenre.bind(this)
     this.handleRating = this.handleRating.bind(this)
@@ -68,13 +68,13 @@ class Home extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if(!nextState.fetched) {
+    if(nextState.fetched === false) {
       this.fetchMovies();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(!prevState.fetched) {
+    if(prevState.fetched === false) {
       this.setState({
         fetched: true
       })
