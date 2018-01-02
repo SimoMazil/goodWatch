@@ -82,7 +82,6 @@ class Home extends Component {
   }
 
   fetchMovies() {
-    const that = this;
     const genre = this.state.genre;
     const rating = Number(this.state.rating);
     const limit = Number(this.state.limit) + 1;
@@ -100,10 +99,10 @@ class Home extends Component {
       return response.json();
     })
     .then(function(data) {
-      that.setState({
+      this.setState({
         listMovies: data.data.movies,
       })
-    });
+    }.bind(this));
   }
 
   cardMovies() {
