@@ -68,7 +68,6 @@ class Home extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log("will update");
     if(!nextState.fetched) {
       this.fetchMovies();
     }
@@ -83,7 +82,6 @@ class Home extends Component {
   }
 
   fetchMovies() {
-    console.log("fetch movies");
     const that = this;
     const genre = this.state.genre;
     const rating = Number(this.state.rating);
@@ -109,7 +107,6 @@ class Home extends Component {
   }
 
   cardMovies() {
-    console.log("card movies");
     const listMovies = this.state.listMovies;
     const cards = [];
     if(listMovies && listMovies.length > 0) {
