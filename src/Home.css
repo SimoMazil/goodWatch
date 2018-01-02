@@ -19,10 +19,8 @@
 
 .Filters-Movie .Hide-Filters {
   height: 0px;
-  transition: height 0.500s ease-out;
 }
 
 .Filters-Movie .Show-Filters {
-  height: 150px;
-  transition: height 0.500s ease-in;
+  height: auto;
 }
