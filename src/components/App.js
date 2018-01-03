@@ -11,17 +11,17 @@ const stateMap = (store) => {
     moviesFetching: store.movies.fetching,
     moviesFetched: store.movies.fetched,
     moviesError: store.movies.error,
-    movies: store.movies.movies
+    moviesList: store.movies.moviesList
   };
 };
 class App extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchMovies())
+    this.props.dispatch(fetchMovies("Comedy"))
   }
 
   render() {
-    const { movies } = this.props;
-    const mappedMovies = movies.map((movie) => <li key={movie.id}>{movie.title}</li>)
+    const { moviesList } = this.props;
+    const mappedMovies = moviesList.map((movie) => <li key={movie.id}>{movie.title}</li>)
     return (
       <div>
         <ul>{mappedMovies}</ul>
