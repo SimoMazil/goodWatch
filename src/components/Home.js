@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import './Home.css';
+import { connect } from 'react-redux';
+
+import { fetchMovies } from '../actions/moviesActions'
+import '../css/Home.css';
 import 'barecss';
 
-class Home extends Component {
+const stateMap = (store) => {
+  return {
+    moviesFetching: store.movies.fetching,
+    moviesFetched: store.movies.fetched,
+    moviesError: store.movies.error,
+    moviesList: store.movies.moviesList
+  };
+};
 
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,8 +79,15 @@ class Home extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    const genre = nextState.genre;
+    const rating = Number(nextState.rating);
+    const limit = Number(nextState.limit);
+    const rtr = nextState.RTRating;
+    const sortBy = nextState.sortBy;
+    const orderBy = nextState.orderBy;
+
     if(nextState.fetched === false) {
-      this.fetchMovies();
+      this.props.dispatch(fetchMovies(genre, rating, limit, rtr, sortBy, orderBy))
     }
   }
 
@@ -78,54 +96,6 @@ class Home extends Component {
       this.setState({
         fetched: true
       })
-    }
-  }
-
-  fetchMovies() {
-    const genre = this.state.genre;
-    const rating = Number(this.state.rating);
-    const limit = Number(this.state.limit) + 1;
-    const rtr = this.state.RTRating;
-    const sortBy = this.state.sortBy;
-    const orderBy = this.state.orderBy;
-    const url = `https://yts.am/api/v2/list_movies.json?genre=
-    ${genre}&minimum_rating=${rating}&with_rt_ratings=${rtr}&limit=${limit}&sort_by=${sortBy}&order_by=${orderBy}`;
-
-    fetch(url)
-    .then(function(response) {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
-    })
-    .then(function(data) {
-      this.setState({
-        listMovies: data.data.movies,
-      })
-    }.bind(this));
-  }
-
-  cardMovies() {
-    const listMovies = this.state.listMovies;
-    const cards = [];
-    if(listMovies && listMovies.length > 0) {
-      for(let i=0; i < listMovies.length - 1; i++) {
-        // console.log(listMovies[i]);
-        let trailerLink = `https://www.youtube.com/watch?v=${listMovies[i].yt_trailer_code}`
-        cards.push(
-          <div col="2/12" key={listMovies[i].id}>
-            <a tt="Click to Watch The Trailer" href={trailerLink} target="_blank">
-              <card style={{minHeight: "550px", maxHeight: "550px", overflow: "hidden"}}>
-                <img src={listMovies[i].medium_cover_image} alt="sign" />
-                <h5>{listMovies[i].title}</h5>
-                <hr/>
-                <p>{listMovies[i].description_full.substring(0,100)} ...</p>
-              </card>
-            </a>
-          </div>
-        )
-      }
-      return cards;
     }
   }
 
@@ -148,16 +118,15 @@ class Home extends Component {
                 <input type="checkbox" id="RottenTomatoes" onChange={this.handleRTRating.bind(this)}/> <label htmlFor="RottenTomatoes">Include Rotten Tomatoes Rating ?</label>
               </div>
               <div col="1/3">
-                <select onChange={this.handleSortBy.bind(this)}>
-                	<option disabled>Sort by</option>
+                <select defaultValue="0" onChange={this.handleSortBy.bind(this)}>
+                	<option value="0" disabled>Sort by</option>
                 	<option value="title">Title</option>
                 	<option value="year">Year</option>
                 	<option value="rating">Rating</option>
                 </select>
               </div>
               <div col="1/3">
-                <select onChange={this.handleOrderBy.bind(this)}>
-                	<option disabled>Order by</option>
+                <select defaultValue="desc" onChange={this.handleOrderBy.bind(this)}>
                 	<option value="desc">Desc</option>
                 	<option value="asc">Asc</option>
                 </select>
@@ -180,6 +149,21 @@ class Home extends Component {
   }
 
   render() {
+    const { moviesList, moviesFetched } = this.props;
+
+    const mappedMovies = moviesFetched ? moviesList.map((movie) =>
+      <div col="2/12" key={movie.id}>
+        <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v=movie"+movie.yt_trailer_code} target="_blank">
+          <card style={{minHeight: "550px", maxHeight: "550px", overflow: "hidden"}}>
+            <img src={movie.medium_cover_image} alt="sign" />
+            <h5>{movie.title}</h5>
+            <hr/>
+            <p>{movie.description_full.substring(0,100)} ...</p>
+          </card>
+        </a>
+      </div>
+    ) : ""
+
     return (
       <div className="Home">
         <header className="Home-header">
@@ -197,14 +181,14 @@ class Home extends Component {
                   <option value="Drama">Drama</option>
                   <option value="Family">Family</option>
                   <option value="Fantasy">Fantasy</option>
-                  <option value="Film">Film</option> Noir
+                  <option value="Film Noir">Film Noir</option>
                   <option value="History">History</option>
                   <option value="Horror">Horror</option>
                   <option value="Music">Music</option>
                   <option value="Musical">Musical</option>
                   <option value="Mystery">Mystery</option>
                   <option value="Romance">Romance</option>
-                  <option value="Sci">Sci</option>-Fi
+                  <option value="Sci-Fi">Sci-Fi</option>
                   <option value="Short">Short</option>
                   <option value="Sport">Sport</option>
                   <option value="Superhero">Superhero</option>
@@ -218,11 +202,11 @@ class Home extends Component {
           {this.filtersMovie()}
         </div>
         <div col="1/1">
-          {this.cardMovies()}
+          <ul>{mappedMovies}</ul>
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+export default connect(stateMap)(Home);
