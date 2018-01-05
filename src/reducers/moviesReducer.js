@@ -10,10 +10,10 @@ export default function reducer(state={
     case "FETCH_MOVIES_REJECTED":
       return {...state, fetching: false, error: action.payload}
     case "FETCH_MOVIES_FULFILLED":
-      const movies = action.payload.data.data.movies;
+      const movies = action.payload.data.data.movies ? action.payload.data.data.movies : [];
 
       let moviesNewList = []
-      
+
       movies.map((movie) =>
         moviesNewList.push({
           "id": movie.id,

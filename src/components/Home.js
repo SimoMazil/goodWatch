@@ -149,7 +149,7 @@ class Home extends Component {
   }
 
   render() {
-    const { moviesList, moviesFetched } = this.props;
+    const { moviesFetching, moviesFetched, moviesError, moviesList } = this.props;
 
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
