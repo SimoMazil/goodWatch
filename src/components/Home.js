@@ -20,6 +20,7 @@ class Home extends Component {
     this.state = {
       listMovies: [],
       genre: "",
+      movieName: "",
       rating: "0",
       RTRating: false,
       limit: "20",
@@ -29,6 +30,7 @@ class Home extends Component {
       arrow: "keyboard_arrow_down",
       fetched: null
     }
+    this.handleMovieName = this.handleMovieName.bind(this)
     this.handleGenre = this.handleGenre.bind(this)
     this.handleRating = this.handleRating.bind(this)
     this.handleRTRating = this.handleRTRating.bind(this)
@@ -39,6 +41,13 @@ class Home extends Component {
   handleGenre(e) {
     this.setState({
       genre: e.target.value,
+      fetched: false
+    })
+  }
+
+  handleMovieName(e) {
+    this.setState({
+      movieName: e.target.value,
       fetched: false
     })
   }
@@ -80,6 +89,7 @@ class Home extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     const genre = nextState.genre;
+    const movieName = nextState.movieName;
     const rating = Number(nextState.rating);
     const limit = Number(nextState.limit);
     const rtr = nextState.RTRating;
@@ -87,7 +97,7 @@ class Home extends Component {
     const orderBy = nextState.orderBy;
 
     if(nextState.fetched === false) {
-      this.props.dispatch(fetchMovies(genre, rating, limit, rtr, sortBy, orderBy))
+      this.props.dispatch(fetchMovies(genre, movieName, rating, limit, rtr, sortBy, orderBy))
     }
   }
 
@@ -106,7 +116,7 @@ class Home extends Component {
           <div col="11/12">
             <div className={this.state.filtersMovie} id="Filters">
               <div col="1/3">
-                <input type="text" placeholder="Actor / Director Name"/>
+                <input type="text" placeholder="Movie Name" onKeyUp={this.handleMovieName.bind(this)}/>
               </div>
               <div col="1/3">
                 <input type="number" min="1" max="50" placeholder="The Limit of Results" onChange={this.handleLimit.bind(this)}/>
@@ -153,7 +163,7 @@ class Home extends Component {
 
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
-        <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v=movie"+movie.yt_trailer_code} target="_blank">
+        <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v="+movie.yt_trailer_code} target="_blank">
           <card style={{minHeight: "550px", maxHeight: "550px", overflow: "hidden"}}>
             <img src={movie.medium_cover_image} alt="sign" />
             <h5>{movie.title}</h5>
