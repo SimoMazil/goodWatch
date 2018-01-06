@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchMovies } from '../actions/moviesActions'
 import '../css/Home.css';
-import 'barecss';
+import card from 'barecss';
 
 const stateMap = (store) => {
   return {
