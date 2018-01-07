@@ -19,10 +19,11 @@ export default function reducer(state={
           "id": movie.id,
           "title": movie.title,
           "medium_cover_image": movie.medium_cover_image,
-          "description_full": movie.description_full.length > 150 ? `${movie.description_full.substring(0,140)}...` : movie.description_full,
+          "description_full": movie.description_full,
           "yt_trailer_code": movie.yt_trailer_code,
-          "genre": movie.genres,
+          "genres": movie.genres.join(', '),
           "year": movie.year,
+          "rating": movie.rating,
           "runtime": `${Math.floor( movie.runtime / 60)}h ${movie.runtime % 60}min`
         })
       )

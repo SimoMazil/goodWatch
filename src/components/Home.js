@@ -164,12 +164,14 @@ class Home extends Component {
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
         <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v="+movie.yt_trailer_code} target="_blank">
-          <card style={{height: "600px", overflow: "hidden"}}>
+          <card style={{height: "600px", overflow: "hidden", position: "relative"}}>
             <img src={movie.medium_cover_image} alt="sign" />
             <h5>{movie.title}</h5>
             <span fs="s">{movie.year} - {movie.runtime}</span>
+            <br/>
+            <span fs="s">{movie.genres}</span>
             <hr/>
-            <p>{movie.description_full}</p>
+            <button>Details</button>
           </card>
         </a>
       </div>
