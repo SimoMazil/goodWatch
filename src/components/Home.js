@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import { fetchMovies } from '../actions/moviesActions'
 import '../css/Home.css';
 import card from 'barecss';
@@ -157,23 +159,23 @@ class Home extends Component {
       arrow: prevState.arrow === "keyboard_arrow_down" ? "keyboard_arrow_up" : "keyboard_arrow_down"
     }))
   }
-
+  // <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v="+movie.yt_trailer_code} target="_blank">
+  //
+  // </a>
   render() {
     const { moviesFetching, moviesFetched, moviesError, moviesList } = this.props;
 
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
-        <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v="+movie.yt_trailer_code} target="_blank">
-          <card style={{height: "600px", overflow: "hidden", position: "relative"}}>
-            <img src={movie.medium_cover_image} alt="sign" />
-            <h5>{movie.title}</h5>
-            <span fs="s">{movie.year} - {movie.runtime}</span>
-            <br/>
-            <span fs="s">{movie.genres}</span>
-            <hr/>
-            <button>Details</button>
-          </card>
-        </a>
+        <card style={{height: "600px", overflow: "hidden", position: "relative"}}>
+          <img src={movie.medium_cover_image} alt="sign" />
+          <h5>{movie.title}</h5>
+          <span fs="s">{movie.year} - {movie.runtime}</span>
+          <br/>
+          <span fs="s">{movie.genres}</span>
+          <hr/>
+          <button><Link to="/details">Details</Link></button>
+        </card>
       </div>
     ) : ""
 
