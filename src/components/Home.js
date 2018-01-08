@@ -124,7 +124,7 @@ class Home extends Component {
                 <input type="number" min="1" max="50" placeholder="The Limit of Results" onChange={this.handleLimit.bind(this)}/>
               </div>
               <div col="1/3">
-                <input type="number" placeholder="The Minimum Rating" onChange={this.handleRating.bind(this)}/>
+                <input type="number" min="0" max="9" placeholder="The Minimum Rating" onChange={this.handleRating.bind(this)}/>
               </div>
               <div col="1/3">
                 <input type="checkbox" id="RottenTomatoes" onChange={this.handleRTRating.bind(this)}/> <label htmlFor="RottenTomatoes">Include Rotten Tomatoes Rating ?</label>
@@ -159,23 +159,21 @@ class Home extends Component {
       arrow: prevState.arrow === "keyboard_arrow_down" ? "keyboard_arrow_up" : "keyboard_arrow_down"
     }))
   }
-  // <a tt="Click to Watch The Trailer" href={"https://www.youtube.com/watch?v="+movie.yt_trailer_code} target="_blank">
-  //
-  // </a>
+
   render() {
     const { moviesFetching, moviesFetched, moviesError, moviesList } = this.props;
 
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
-        <card style={{height: "600px", overflow: "hidden", position: "relative"}}>
-          <img src={movie.medium_cover_image} alt="sign" />
-          <h5>{movie.title}</h5>
-          <span fs="s">{movie.year} - {movie.runtime}</span>
-          <br/>
-          <span fs="s">{movie.genres}</span>
-          <hr/>
-          <button><Link to="/details">Details</Link></button>
-        </card>
+        <Link tt="Click to view Details" to="/details">
+          <card style={{minHeight: "480px", maxHeight: "500px", overflow: "hidden", position: "relative"}}>
+            <img src={movie.medium_cover_image} alt="sign" />
+            <h5>{movie.title}</h5>
+            <span fs="s">{movie.year} - {movie.runtime}</span>
+            <br/>
+            <span fs="s">{movie.genres}</span>
+          </card>
+        </Link>
       </div>
     ) : ""
 
