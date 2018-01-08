@@ -180,7 +180,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <header className="Home-header">
-          <h1 className="App-title">Welcome to Good Watch</h1>
+          <h1 className="Home-title">Welcome to Good Watch</h1>
             <div col="1/3">
               <select defaultValue="0" onChange={this.handleGenre.bind(this)}>
                 <option value="0" disabled>Choose your favorite genre</option>
