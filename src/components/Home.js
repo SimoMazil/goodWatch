@@ -98,7 +98,7 @@ class Home extends Component {
     const sortBy = nextState.sortBy;
     const orderBy = nextState.orderBy;
 
-    if(nextState.fetched === false) {
+    if(nextState.fetched === false && genre !== "") {
       this.props.dispatch(fetchMovies(genre, movieName, rating, limit, rtr, sortBy, orderBy))
     }
   }
