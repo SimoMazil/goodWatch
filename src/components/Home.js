@@ -165,7 +165,7 @@ class Home extends Component {
 
     const mappedMovies = moviesFetched ? moviesList.map((movie) =>
       <div col="2/12" key={movie.id}>
-        <Link tt="Click to view Details" to="/details">
+        <Link tt="Click to view Details" to={{pathname: `/details/${movie.id}`}}>
           <card style={{minHeight: "480px", maxHeight: "500px", overflow: "hidden", position: "relative"}}>
             <img src={movie.medium_cover_image} alt="sign" />
             <h5>{movie.title}</h5>
