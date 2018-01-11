@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { fetchMovies } from '../actions/moviesActions'
 
-import '../css/Home.css';
+import '../css/styles.css';
 import card from 'barecss';
 
 const stateMap = (store) => {
@@ -167,7 +167,7 @@ class Home extends Component {
       <div col="2/12" key={movie.id}>
         <Link tt="Click to view Details" to={{pathname: `/details/${movie.id}`}}>
           <card style={{minHeight: "480px", maxHeight: "500px", overflow: "hidden", position: "relative"}}>
-            <img src={movie.medium_cover_image} alt="sign" />
+            <img src={movie.medium_cover_image} />
             <h5>{movie.title}</h5>
             <span fs="s">{movie.year} - {movie.runtime}</span>
             <br/>
@@ -179,8 +179,8 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        <header className="Home-header">
-          <h1 className="Home-title">Welcome to Good Watch</h1>
+        <header className="header">
+          <h1 className="header-title">Welcome to Good Watch</h1>
             <div col="1/3">
               <select defaultValue="0" onChange={this.handleGenre.bind(this)}>
                 <option value="0" disabled>Choose your favorite genre</option>
