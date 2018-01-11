@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { fetchMovies } from '../actions/moviesActions'
+
 import '../css/Home.css';
 import card from 'barecss';
 

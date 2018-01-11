@@ -9,3 +9,12 @@ export function fetchMovies(genre, movieName, rating, limit, rtr, sortBy, orderB
     payload: axios.get(url)
   }
 }
+
+export function fetchMovieDetails(movieId) {
+  const url = `https://yts.am/api/v2/movie_details.json?movie_id=${movieId}`;
+
+  return {
+    type: "FETCH_MOVIE",
+    payload: axios.get(url)
+  }
+}
