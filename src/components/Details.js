@@ -26,6 +26,8 @@ class Details extends Component {
 
     const { movieFetching, movieFetched, movieError, movieDetails } = this.props;
 
+    const trailer = `https://www.youtube.com/embed/${movieDetails.yt_trailer_code}`;
+
     return (
       <div className="Details">
         <header className="header" style={{backgroundImage: `url(${movieDetails.background_image})`, backgroundSize: "cover"}}>
@@ -37,9 +39,12 @@ class Details extends Component {
           <p>{movieDetails.description_full}</p>
         </div>
         <div col="1/1">
-          <button tt="Watch Trailer"><i class="material-icons">play_arrow</i></button>
-          <button tt="Share"><i class="material-icons">share</i></button>
-          <button tt="Download Torrent"><i class="material-icons">file_download</i></button>
+          <iframe width="560" height="315" src={trailer} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div col="1/1">
+          <button tt="Watch Trailer"><i className="material-icons">play_arrow</i></button>
+          <button tt="Share"><i className="material-icons">share</i></button>
+          <button tt="Download Torrent"><i className="material-icons">file_download</i></button>
         </div>
       </div>
     );
